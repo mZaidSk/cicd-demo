@@ -30,3 +30,7 @@ Thumbs.db
 # tests & coverage
 coverage
 __tests__
+
+
+Dockerfile*
+docker-compose*.yml
