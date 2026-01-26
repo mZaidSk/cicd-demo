@@ -34,5 +34,5 @@ jobs:
                   file: Dockerfile.dev
                   push: true
                   tags: |
-                      mzaidsk/vite-app-dev:${{ github.ref_name }}-${{ steps.vars.outputs.short_sha }}
-                      mzaidsk/vite-app-dev:latest
+                      mzaidsk/cicd-demo:${{ github.ref_name }}-${{ steps.vars.outputs.short_sha }}
+                      mzaidsk/cicd-demo:latest
