@@ -41,7 +41,7 @@ jobs:
               uses: docker/build-push-action@v5
               with:
                   context: .
-                  file: Dockerfile.dev
+                  file: Dockerfile.prod
 
                   # Push images ONLY on push events
                   push: ${{ github.event_name == 'push' }}
