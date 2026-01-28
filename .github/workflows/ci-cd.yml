@@ -55,7 +55,7 @@ jobs:
         runs-on: ubuntu-latest
 
         environment: ${{ github.ref_name }}
-        if: github.event_name == 'push' && github.ref_name == 'main'
+        if: github.event_name == 'push'
 
         steps:
             - name: Deploy to ${{ github.ref_name }} environment
