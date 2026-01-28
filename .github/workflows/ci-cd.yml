@@ -18,6 +18,8 @@ jobs:
 
         # Environment is selected dynamically based on branch
         environment: ${{ github.ref_name }}
+        outputs:
+            image_tag: ${{ steps.vars.outputs.short_sha }}
 
         steps:
             - name: Checkout code
@@ -47,3 +49,35 @@ jobs:
                   tags: |
                       mzaidsk/cicd-demo:${{ github.ref_name }}-${{ steps.vars.outputs.short_sha }}
                       ${{ github.ref_name == 'main' && 'mzaidsk/cicd-demo:latest' || '' }}
+
+    # deploy:
+    #     needs: build
+    #     runs-on: ubuntu-latest
+
+    #     environment: ${{ github.ref_name }}
+    #     if: github.event_name == 'push' && github.ref_name == 'main'
+
+    #     steps:
+    #         - name: Deploy to ${{ github.ref_name }} environment
+    #           run: |
+    #               echo "Deploying to the ${{ github.ref_name }} environment..."
+    #               # Add your deployment commands here
+
+    #         - name: Deploy to server via SSH
+    #           uses: appleboy/ssh-action@v1.0.3
+    #           with:
+    #               host: ${{ secrets.SERVER_HOST }}
+    #               username: ${{ secrets.SERVER_USER }}
+    #               key: ${{ secrets.SSH_PRIVATE_KEY }}
+    #               script: |
+    #                   docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_TOKEN }}
+
+    #                   docker pull mzaidsk/cicd-demo:${{ github.ref_name }}-${{ needs.build.outputs.image_tag }}
+
+    #                   docker stop cicd-demo || true
+    #                   docker rm cicd-demo || true
+
+    #                   docker run -d \
+    #                   --name cicd-demo \
+    #                   -p ${{vars.APP_PORT}}:${{vars.APP_PORT}} \
+    #                   mzaidsk/cicd-demo:${{ github.ref_name }}-${{ needs.build.outputs.image_tag }}
