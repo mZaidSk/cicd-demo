@@ -7,6 +7,6 @@ export default defineConfig({
     server: {
         host: true,
         port: 5173,
-        allowedHosts: ["cicd.mzsk.fun"],
+        allowedHosts: ["cicd-dev.mzsk.fun", "cicd-main.mzsk.fun"],
     },
 });
