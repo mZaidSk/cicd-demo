@@ -70,14 +70,14 @@ jobs:
                   username: ${{ secrets.SERVER_USER }}
                   key: ${{ secrets.SSH_PRIVATE_KEY }}
                   script: |
-                      docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_TOKEN }}
+                      sudo docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_TOKEN }}
 
-                      docker pull mzaidsk/cicd-demo:${{ github.ref_name }}-${{ needs.build.outputs.image_tag }}
+                      sudo docker pull mzaidsk/cicd-demo:${{ github.ref_name }}-${{ needs.build.outputs.image_tag }}
 
-                      docker stop cicd-demo || true
-                      docker rm cicd-demo || true
+                      sudo docker stop cicd-demo || true
+                      sudo docker rm cicd-demo || true
 
-                      docker run -d \
+                      sudo docker run -d \
                       --name cicd-demo \
                       -p ${{vars.APP_PORT}}:${{vars.APP_PORT}} \
                       mzaidsk/cicd-demo:${{ github.ref_name }}-${{ needs.build.outputs.image_tag }}
