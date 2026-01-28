@@ -41,7 +41,7 @@ jobs:
               uses: docker/build-push-action@v5
               with:
                   context: .
-                  file: Dockerfile.prod
+                  file: Dockerfile.${{github.ref_name}}
 
                   # Push images ONLY on push events
                   push: ${{ github.event_name == 'push' }}
@@ -74,10 +74,10 @@ jobs:
 
                       sudo docker pull mzaidsk/cicd-demo:${{ github.ref_name }}-${{ needs.build.outputs.image_tag }}
 
-                      sudo docker stop cicd-demo || true
-                      sudo docker rm cicd-demo || true
+                      sudo docker stop cicd-${{github.ref_name}} || true
+                      sudo docker rm cicd-${{github.ref_name}} || true
 
                       sudo docker run -d \
-                      --name cicd-demo \
+                      --name cicd-${{github.ref_name}} \
                       -p ${{vars.APP_PORT}}:${{vars.APP_PORT}} \
                       mzaidsk/cicd-demo:${{ github.ref_name }}-${{ needs.build.outputs.image_tag }}
